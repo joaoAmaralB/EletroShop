@@ -49,12 +49,11 @@ create table carrinho(
 	id_prod int not null,
 	id_cli int not null,
 	qtd_itens int not null,
-	primary key(id),
 	foreign key(id_prod) references produtos(id),
 	foreign key(id_cli) references clientes(id)	
 );
 
-CREATE FUNCTION fn_TotalCarrinho (carrinho int)
+CREATE FUNCTION fn_TotalCarrinho (id_carrinho int)
 RETURNS FLOAT DETERMINISTIC
 RETURN
 (SELECT SUM(p.preco)
@@ -72,6 +71,15 @@ UPDATE produtos SET quantidade = quantidade - NEW.qtd_itens
 WHERE id = NEW.id_prod;
 END$
 DELIMITER ;
+
+CREATE FUNCTION fn_MediaAvaliacao (id_prod int)
+RETURNS FLOAT DETERMINISTIC
+RETURN
+(SELECT avg(a.nota)
+FROM avaliacao a INNER JOIN produtos p
+ON p.id = a.id_prod INNER JOIN clientes cl
+ON cl.id = a.id_cli
+WHERE p.id = id_prod);
 ```
 
 ## Configuração do seu banco de dados
