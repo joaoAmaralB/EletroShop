@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
   });
 });
 
+//Get produto x
 app.get("/produto/:id", (req, res) => {
   const produtoId = req.params.id;
   const q = "SELECT * FROM produtos WHERE id = ?";
@@ -30,6 +31,21 @@ app.get("/produto/:id", (req, res) => {
     if (err) return res.json(err);
     return res.json(data);
   });
+});
+
+//Get total do carrinho
+app.get("/carrinho/:id", (req, res) => {
+  const carrinhoId = req.params.id
+  const q = `SELECT fn_TotalCarrinho(${carrinhoId})`;
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+})
+
+//Get carrinho x
+app.get("/carrinho", (req, res) => {
+  const q = ""
 });
 
 //Delete
@@ -77,17 +93,6 @@ app.put("/update/:id", (req, res) => {
   ];
 
   db.query(q, [...values, produtoId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Updated");
-  });
-});
-
-app.put("/update/:id", (req, res) => {
-  const produtoId = req.params.id;
-  const q =
-    "UPDATE produtos SET `quantidade` = ? WHERE id = ?";
-
-  db.query(q, [req.body.novaQuantidade, produtoId], (err, data) => {
     if (err) return res.json(err);
     return res.json("Updated");
   });
