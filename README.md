@@ -75,7 +75,7 @@ DELIMITER ;
 CREATE FUNCTION fn_MediaAvaliacao (id_prod int)
 RETURNS FLOAT DETERMINISTIC
 RETURN
-(SELECT avg(a.nota)
+(SELECT round(avg(a.nota), 2)
 FROM avaliacao a INNER JOIN produtos p
 ON p.id = a.id_prod INNER JOIN clientes cl
 ON cl.id = a.id_cli
