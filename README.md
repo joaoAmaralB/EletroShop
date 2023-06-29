@@ -53,5 +53,22 @@ create table carrinho(
 	foreign key(id_cli) references clientes(id)	
 );
 
+CREATE FUNCTION fn_TotalCarrinho (carrinho int)
+RETURNS FLOAT DETERMINISTIC
+RETURN
+(SELECT SUM(p.preco)
+FROM produtos p INNER JOIN carrinho c
+ON p.id = c.id_prod INNER JOIN clientes cl
+ON cl.id = c.id_cli
+WHERE c.id = id_carrinho);
 
+DELIMITER $
+CREATE TRIGGER Tgr_Carrinho_Insert AFTER INSERT
+ON carrinho
+FOR EACH ROW
+BEGIN
+UPDATE produtos SET quantidade = quantidade - NEW.qtd_itens
+WHERE id = NEW.id_prod;
+END$
+DELIMITER ;
 ```
