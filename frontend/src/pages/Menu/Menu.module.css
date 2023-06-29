@@ -1,0 +1,18 @@
+.menu__container {
+    align-items: center;
+}
+
+.produtos {
+    color: #0077b6;
+    text-align: center;
+    border-bottom: 2px solid #0077b6;
+    margin: 1em 4em;
+    padding-bottom: 0.5em;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+}

@@ -1,0 +1,14 @@
+.produto__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.produto__imagem {
+    width: 50vh;
+    margin-right: 2em;
+}
+
+.produto__info {
+
+}

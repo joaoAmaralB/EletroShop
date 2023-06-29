@@ -1,0 +1,17 @@
+.rodape__container {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  padding: 1em;
+  background-color: #0077b6;
+  color: #FFFFFF;
+}
+
+.texto {
+  text-align: center;
+  font-size: 14px;
+}
+
+.marca {
+  margin-top: 4em;
+  font-size: 10px;
+  text-align: center;
+}

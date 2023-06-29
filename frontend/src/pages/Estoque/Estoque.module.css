@@ -1,0 +1,53 @@
+.titulo {
+  color: #0077b6;
+  text-align: center;
+  border-bottom: 2px solid #0077b6;
+  margin: 1em 4em 0 4em;
+  padding-bottom: 0.5em;
+}
+
+.add {
+  scale: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add:hover {
+    cursor: pointer;
+}
+
+.lista {
+  padding: 0 7.7em;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+  margin-bottom: 1em;
+}
+
+.texto {
+  text-align: start;
+  margin-left: 1em;
+}
+
+.botoes {
+  margin-bottom: 1em;
+}
+
+.delete {
+  margin-top: 1.5em;
+  color: #FFFFFF;
+  background-color: #8C1700;
+  border: none;
+}
+
+.att {
+  
+  background-color: #003A59;
+  border: none;
+  color: #FFFFFF;
+}

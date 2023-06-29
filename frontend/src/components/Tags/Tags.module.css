@@ -1,0 +1,30 @@
+.tags__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.texto {
+    font-size: 20px;
+}
+
+.lista {
+    display: flex;
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tag {
+    border: 1px solid #003A59;
+    border-radius: 10px;
+    padding: .5em 1em;
+    margin-right: .5em;
+    transition: all .3s;
+}
+
+.tag:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: #003A59;
+}

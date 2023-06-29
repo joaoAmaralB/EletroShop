@@ -1,0 +1,38 @@
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2em 20em;
+}
+
+.label {
+    display: flex;
+    font-size: 26px;
+    margin-bottom: 1em;
+    color: #003A59;
+    align-items: center;
+}
+
+.label input, textarea {
+    margin-left: 1.2em;
+    border-radius: 5px;
+    padding: 1em;
+    color: #003A59;
+    border: 1px solid #003A59;
+}
+
+.botoes {
+    display: flex;  
+}
+
+.botoes button {
+    border-radius: 5px;
+    margin-right: 1em;
+    padding: 1em 5em;
+}
+
+.att {
+    color: #FFFFFF;
+    background-color: #003A59;
+    border: none;
+}
