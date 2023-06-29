@@ -48,6 +48,17 @@ app.get("/carrinho", (req, res) => {
   const q = ""
 });
 
+//Get avaliacoes
+app.get("/avaliacoes/:id", (req, res) => {
+  const produtoId = req.params.id;
+  const q = "SELECT * FROM avaliacoes WHERE id_prod = ?"
+
+  db.query(q, [produtoId], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  })
+});
+
 //Delete
 app.delete("/estoque/:id", (req, res) => {
   const produtoId = req.params.id;
