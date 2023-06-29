@@ -14,7 +14,7 @@ Projeto feito na matéria: Banco de dados 2.
 
 ```
 create table produtos(
-  id int not null,
+	id int not null,
 	nome varchar(50) not null,
 	descricao varchar(100) not null,
 	preco float not null,
@@ -48,6 +48,7 @@ create table carrinho(
 	id int not null,
 	id_prod int not null,
 	id_cli int not null,
+	qtd_itens int not null,
 	primary key(id),
 	foreign key(id_prod) references produtos(id),
 	foreign key(id_cli) references clientes(id)	
@@ -71,4 +72,16 @@ UPDATE produtos SET quantidade = quantidade - NEW.qtd_itens
 WHERE id = NEW.id_prod;
 END$
 DELIMITER ;
+```
+
+## Configuração do seu banco de dados
+
+Em `backend/connection.js` insira as configurações do seu banco de dados:
+```
+const db = mysql.createConnection({
+  host: "seu host",
+  user: "seu usuario",
+  password: "sua senha",
+  database: "seu banco",
+});
 ```
