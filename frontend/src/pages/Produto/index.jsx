@@ -11,6 +11,7 @@ function Produto() {
 
     const [produto, setProduto] = useState([])
     const [avaliacoes, setAvaliacoes] = useState([])
+    const [mediaAvaliacoes, setMediaAvaliacoes] = useState()
     console.log(produto)
 
     useEffect(() => {
@@ -37,6 +38,19 @@ function Produto() {
         }
 
         fetchAvaliacoes()
+    }, [])
+
+    useEffect(() => {
+        const fetchMediaAvaliacoes= async () => {
+            try {
+                const res = await axios.get(`http://localhost:8800/avaliacao/media/${prodId}`)
+                setMediaAvaliacoes(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchMediaAvaliacoes()
     }, [])
 
     const handleBuy = async () => {
@@ -76,7 +90,7 @@ function Produto() {
                 <h2>{mediaAvaliacoes}</h2>
                 {avaliacoes.map(avaliacao => {
                     return (
-                        <Avaliacoes nota={avaliacao.nota} comentario={avaliacao.comentario}/>
+                        <Avaliacoes nota={avaliacao.nota} comentario={avaliacao.comentario} nome={avaliacao.nome}/>
                     )
                 })}
             </div>

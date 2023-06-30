@@ -1,8 +1,12 @@
 import React from 'react'
 
-function Avaliacoes() {
+function Avaliacoes({ nota, comentario, nome }) {
   return (
-    <div>Avaliacoes</div>
+    <div>
+      <h2>{nota}</h2>
+      <h4>{nome}</h4>
+      <p>{comentario}</p>
+    </div>
   )
 }
 

@@ -59,6 +59,17 @@ app.get("/avaliacoes/:id", (req, res) => {
   })
 });
 
+//Get media avaliacoes
+app.get("/avaliacao/media/:id", (req, res) => {
+  const produtoId = req.params.id;
+  const q = `SELECT fn_MediaAvaliacao (${produtoId})`;
+
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
 //Delete
 app.delete("/estoque/:id", (req, res) => {
   const produtoId = req.params.id;
