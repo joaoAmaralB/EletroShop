@@ -39,6 +39,7 @@ create table avaliacao(
 	id_cli int not null,
 	nota int not null,
 	comentario varchar(100),
+	nome varchar(50) not null,
 	primary key(id),
 	foreign key(id_prod) references produtos(id),
 	foreign key(id_cli) references clientes(id)
