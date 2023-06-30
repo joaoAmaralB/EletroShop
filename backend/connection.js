@@ -33,8 +33,27 @@ app.get("/produto/:id", (req, res) => {
   });
 });
 
+//Get login cliente x
+app.get("/cadastro/entrar/:email", (req, res) => {
+  const clienteEmail = req.params.email
+  const q = "SELECT id FROM clientes WHERE email = ?";
+  db.query(q, [clienteEmail], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+})
+
+//Get id do recente cliente cadastrado
+app.get("/cadastro/novo", (req, res) => {
+  const q = "SELECT LAST_INSERT_ID() FROM clientes";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+})
+
 //Get total do carrinho
-app.get("/carrinho/:id", (req, res) => {
+app.get("/carrinho/:id/total", (req, res) => {
   const carrinhoId = req.params.id
   const q = `SELECT fn_TotalCarrinho(${carrinhoId})`;
   db.query(q, (err, data) => {
@@ -44,8 +63,13 @@ app.get("/carrinho/:id", (req, res) => {
 })
 
 //Get carrinho x
-app.get("/carrinho", (req, res) => {
-  const q = ""
+app.get("/carrinho/:id", (req, res) => {
+  const q = "SELECT * FROM produtos p INNER JOIN carrinho ca ON ca.id_prod = p.id INNER JOIN clientes cl ON cl.id = ca.id_cli WHERE ca.id_cli = ?"
+  const clientId = req.params.id
+  db.query(q, [clientId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  })
 });
 
 //Get avaliacoes
@@ -81,7 +105,7 @@ app.delete("/estoque/:id", (req, res) => {
   });
 });
 
-//Add
+//Add produto
 app.post("/add", (req, res) => {
   const q = "INSERT INTO produtos(`nome`, `descricao`, `preco`, `tag`, `quantidade`, `imagem`) VALUES (?)";
   const values = [
@@ -90,15 +114,44 @@ app.post("/add", (req, res) => {
     req.body.preco,
     req.body.tag,
     req.body.quantidade,
-    req.body.imagem,
+    req.body.imagem
   ];
 
   db.query(q, [values], (err, data) => {
     if (err) return console.log(err);
-    return console.log("Added");
+    return console.log("Added into produtos");
   });
 });
 
+//Add cliente
+app.post("/cadastro/cadastrar", (req, res) => {
+  const q = "INSERT INTO clientes(`nome`, `email`, `endereco`, `telefone`, `senha`) VALUES (?)";
+  const values = [
+    req.body.nome,
+    req.body.email,
+    req.body.endereco,
+    req.body.telefone,
+    req.body.senha
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return console.log(err);
+    return res.json(data);
+  });
+});
+
+//Add carrinho do cliente x
+app.post("/carrinho/:clientId/:prodId", (req, res) => {
+  const q = "INSERT INTO carrinho(`id`, `id_prod`, `id_cli`, `qtd_itens`) VALUES (?)";
+  const prodId = req.params.prodId;
+  const clientId = req.params.clientId;
+  const qtd_itens = req.body.quantidade;
+
+  db.query(q, [clientId, prodId, clientId, qtd_itens], (err, data) => {
+    if (err) return console.log(err);
+    return console.log("Added into carrinho");
+  });
+});
 
 //Update
 app.put("/update/:id", (req, res) => {
@@ -116,7 +169,7 @@ app.put("/update/:id", (req, res) => {
 
   db.query(q, [...values, produtoId], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Updated");
+    return res.json(`Produto ${produtoId}: ${req.body.nome} updated`);
   });
 });
 

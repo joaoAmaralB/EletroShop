@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react'
 import styles from './Cadastro.module.css'
-import Botao from 'components/Botao'
-import { Link } from 'react-router-dom'
 import FormCadastro from 'components/FormCadastro'
 import FormEntrar from 'components/FormEntrar'
 import { ClienteContext } from 'context/ClienteContext'
@@ -9,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 function Cadastro() {
   const [toggleForm, setToggleForm] = useState(false)
-  const { clientEmail, setClientEmail } = useContext(ClienteContext)
+  const { clientId, setClientId } = useContext(ClienteContext)
   const [cliente, setCliente] = useState({
     nome: '',
     email: '',
@@ -28,7 +26,8 @@ function Cadastro() {
 
     try {
       await axios.post('http://localhost:8800/cadastro/cadastrar', cliente);
-      setClientEmail(cliente.email);
+      const res = await axios.get('http://localhost:8800/cadastro/novo');
+      setClientId(res.data);
       nav('/');
     } catch (err) {
       console.log(err);
@@ -40,7 +39,7 @@ function Cadastro() {
 
     try {
       const res = await axios.get(`http://localhost:8800/cadastro/entrar/${cliente.email}`);
-      setClientEmail(res.data);
+      setClientId(res.data);
       nav('/');
     } catch (err) {
       console.log(err);
