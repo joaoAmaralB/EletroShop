@@ -1,0 +1,26 @@
+.comentario__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1em;
+}
+
+.input {
+    border: 1px solid #003A59;
+    border-radius: 10px;
+    text-align: end;
+    width: 20%;
+}
+
+.label {
+    margin-bottom: 1em;
+}
+
+.textarea {
+    border: 1px solid #003A59;
+    border-radius: 10px;
+}
+
+.botao {
+    margin-top: 1em;
+}

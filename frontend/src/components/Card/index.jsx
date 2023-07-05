@@ -1,3 +1,4 @@
+import axios from 'axios'
 import styles from './Card.module.css'
 import BotaoCarrinho from 'components/BotaoCarrinho'
 import { ClienteContext } from 'context/ClienteContext'
@@ -11,7 +12,7 @@ function Card({ id, nome, preco, imagem, tag }) {
 
   const handleCarrinho = async () => {
     try {
-      axios.post(`http://localhost:8800/carrinho/${clientId}/${id}`, quantidade)
+      await axios.post(`http://localhost:8800/carrinho/${clientId}/${id}`, { quantidade: quantidade })
     } catch (error) {
       console.log(error)
     }
@@ -26,7 +27,7 @@ function Card({ id, nome, preco, imagem, tag }) {
 
       <div className={styles.botoes}>
         <button onClick={() => nav(`/produto/${id}`)}>Comprar</button>
-        <BotaoCarrinho onclick={handleCarrinho}/>
+        <BotaoCarrinho handleCarrinho={handleCarrinho}/>
       </div>
     </div>
   )

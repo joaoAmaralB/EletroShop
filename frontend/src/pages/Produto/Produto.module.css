@@ -9,6 +9,19 @@
     margin-right: 2em;
 }
 
-.produto__info {
+.botoes {
+    text-align: center;
+}
 
+.botoes button {
+    margin-left: 1em;
+}
+
+.avaliacao {
+    text-align: center;
+}
+
+.avaliacoes {
+    padding: .5em;
+    border-bottom: 1px solid #808080;
 }

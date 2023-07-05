@@ -1,4 +1,3 @@
-import Botao from 'components/Botao'
 import React from 'react'
 
 function FormEntrar({ styles, setToggleForm, toggleForm, handleChange, handleClickLogin }) {
@@ -7,14 +6,14 @@ function FormEntrar({ styles, setToggleForm, toggleForm, handleChange, handleCli
             <div>
                 <form className={styles.formulario}>
                     <h2 className={styles.textos}>Email</h2>
-                    <input type="email" placeholder='Insira seu email aqui' name='' className={styles.inputs} onChange={handleChange}/>
+                    <input type="email" placeholder='Insira seu email aqui' name='email' className={styles.inputs} onChange={handleChange}/>
                     <h2 className={styles.textos}>Senha</h2>
-                    <input type="password" placeholder='Insira sua senha aqui' className={styles.inputs}/>
+                    <input type="password" placeholder='Insira sua senha aqui' name='senha' className={styles.inputs} onChange={handleChange}/>
                 </form>
                 <div className={styles.botoes}>
-                    <Botao className={styles.botao_entrar} onclick={handleClickLogin}>
+                    <button className={styles.botao_entrar} onClick={handleClickLogin}>
                         Entrar
-                    </Botao>
+                    </button>
                 </div>
                 <p>Não possui cadastro? <spam className={styles.link} onClick={() => setToggleForm(!toggleForm)}> Cadastrar</spam></p>
             </div>

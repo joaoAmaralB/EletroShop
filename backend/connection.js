@@ -34,18 +34,22 @@ app.get("/produto/:id", (req, res) => {
 });
 
 //Get login cliente x
-app.get("/cadastro/entrar/:email", (req, res) => {
+app.get("/cadastro/entrar/:email/:senha", (req, res) => {
   const clienteEmail = req.params.email
-  const q = "SELECT id FROM clientes WHERE email = ?";
-  db.query(q, [clienteEmail], (err, data) => {
+  const clienteSenha = req.params.senha
+  console.log(clienteEmail)
+  console.log(clienteSenha)
+  const q = "SELECT id FROM clientes WHERE email = ? and senha = ?";
+  db.query(q, [clienteEmail, clienteSenha], (err, data) => {
     if (err) return res.json(err);
+    console.log('Achei o cliente')
     return res.json(data);
   });
 })
 
 //Get id do recente cliente cadastrado
 app.get("/cadastro/novo", (req, res) => {
-  const q = "SELECT LAST_INSERT_ID() FROM clientes";
+  const q = "SELECT LAST_INSERT_ID() as id FROM clientes";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -54,17 +58,18 @@ app.get("/cadastro/novo", (req, res) => {
 
 //Get total do carrinho
 app.get("/carrinho/:id/total", (req, res) => {
-  const carrinhoId = req.params.id
-  const q = `SELECT fn_TotalCarrinho(${carrinhoId})`;
+  const carrinhoId = req.params.id;
+  const q = `SELECT fn_TotalCarrinho(${carrinhoId}) as total`;
   db.query(q, (err, data) => {
     if (err) return res.json(err);
-    return res.json(data);
+    console.log(data);
+    return res.json(data[0].total);
   });
 })
 
 //Get carrinho x
 app.get("/carrinho/:id", (req, res) => {
-  const q = "SELECT * FROM produtos p INNER JOIN carrinho ca ON ca.id_prod = p.id INNER JOIN clientes cl ON cl.id = ca.id_cli WHERE ca.id_cli = ?"
+  const q = "SELECT p.id, p.nome, p.preco, ca.qtd_itens FROM produtos p INNER JOIN carrinho ca ON ca.id_prod = p.id INNER JOIN clientes cl ON cl.id = ca.id_cli WHERE ca.id_cli = ?"
   const clientId = req.params.id
   db.query(q, [clientId], (err, data) => {
     if (err) return res.json(err);
@@ -75,10 +80,11 @@ app.get("/carrinho/:id", (req, res) => {
 //Get avaliacoes
 app.get("/avaliacoes/:id", (req, res) => {
   const produtoId = req.params.id;
-  const q = "SELECT * FROM avaliacoes WHERE id_prod = ?"
+  const q = "SELECT av.nota, av.comentario, cl.nome FROM avaliacao av INNER JOIN clientes cl ON cl.id = av.id_cli WHERE id_prod = ?"
 
   db.query(q, [produtoId], (err, data) => {
     if (err) return res.send(err);
+    console.log(data);
     return res.json(data);
   })
 });
@@ -86,11 +92,12 @@ app.get("/avaliacoes/:id", (req, res) => {
 //Get media avaliacoes
 app.get("/avaliacao/media/:id", (req, res) => {
   const produtoId = req.params.id;
-  const q = `SELECT fn_MediaAvaliacao (${produtoId})`;
+  const q = `SELECT fn_MediaAvaliacao (${produtoId}) as mediaAvaliacao`;
 
   db.query(q, (err, data) => {
     if (err) return res.json(err);
-    return res.json(data);
+    console.log(data[0].mediaAvaliacao);
+    return res.json(data[0].mediaAvaliacao);
   });
 });
 
@@ -143,13 +150,32 @@ app.post("/cadastro/cadastrar", (req, res) => {
 //Add carrinho do cliente x
 app.post("/carrinho/:clientId/:prodId", (req, res) => {
   const q = "INSERT INTO carrinho(`id`, `id_prod`, `id_cli`, `qtd_itens`) VALUES (?)";
-  const prodId = req.params.prodId;
-  const clientId = req.params.clientId;
-  const qtd_itens = req.body.quantidade;
+  const values = [
+    req.params.clientId,
+    req.params.prodId,
+    req.params.clientId,
+    req.body.quantidade
+  ];
 
-  db.query(q, [clientId, prodId, clientId, qtd_itens], (err, data) => {
+  db.query(q, [values], (err, data) => {
     if (err) return console.log(err);
     return console.log("Added into carrinho");
+  });
+});
+
+//Add avaliacao
+app.post("/avaliacao/:clientId/:prodId", (req, res) => {
+  const q = "INSERT INTO avaliacao(`id_prod`, `id_cli`, `nota`, `comentario`) VALUES (?)";
+  const values = [
+    req.params.prodId,
+    req.params.clientId,
+    req.body.nota,
+    req.body.comentario
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return console.log(err);
+    return console.log("Added into avaliacao");
   });
 });
 

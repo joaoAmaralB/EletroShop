@@ -4,6 +4,7 @@ import FormCadastro from 'components/FormCadastro'
 import FormEntrar from 'components/FormEntrar'
 import { ClienteContext } from 'context/ClienteContext'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Cadastro() {
   const [toggleForm, setToggleForm] = useState(false)
@@ -12,8 +13,11 @@ function Cadastro() {
     nome: '',
     email: '',
     endereco: '',
-    telefone: ''
+    telefone: '',
+    senha: ''
   })
+
+  console.log(clientId)
 
   const nav = useNavigate()
 
@@ -27,7 +31,8 @@ function Cadastro() {
     try {
       await axios.post('http://localhost:8800/cadastro/cadastrar', cliente);
       const res = await axios.get('http://localhost:8800/cadastro/novo');
-      setClientId(res.data);
+      const idNovo = res.data[0].id;
+      setClientId(idNovo);
       nav('/');
     } catch (err) {
       console.log(err);
@@ -38,8 +43,11 @@ function Cadastro() {
     e.preventDefault();
 
     try {
-      const res = await axios.get(`http://localhost:8800/cadastro/entrar/${cliente.email}`);
-      setClientId(res.data);
+      console.log(cliente)
+      const res = await axios.get(`http://localhost:8800/cadastro/entrar/${cliente.email}/${cliente.senha}`);
+      const idNovo = res.data[0].id;
+      console.log(idNovo);
+      setClientId(idNovo);
       nav('/');
     } catch (err) {
       console.log(err);
@@ -51,7 +59,7 @@ function Cadastro() {
       {toggleForm ?
         <FormCadastro styles={styles} toggleForm={toggleForm} setToggleForm={setToggleForm} handleChange={handleChange} handleClick={handleClick} />
         :
-        <FormEntrar styles={styles} toggleForm={toggleForm} setToggleForm={setToggleForm} handleChange={handleChange} handleClick={handleClickLogin} />
+        <FormEntrar styles={styles} toggleForm={toggleForm} setToggleForm={setToggleForm} handleChange={handleChange} handleClickLogin={handleClickLogin} />
       }
     </div>
   )

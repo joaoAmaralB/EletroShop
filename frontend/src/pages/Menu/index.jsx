@@ -39,6 +39,7 @@ function Menu() {
       <ul className={styles.cards}>
         {produtos.map(produto => {
           return <Card
+            key={produto.id}
             id={produto.id}
             nome={produto.nome}
             preco={produto.preco}

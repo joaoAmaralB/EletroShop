@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Produto.module.css'
 import Avaliacoes from 'components/Avaliacoes'
+import AvaliacaoComentario from 'components/AvaliacaoComentario'
 
 function Produto() {
     const loc = useLocation()
@@ -12,7 +13,6 @@ function Produto() {
     const [produto, setProduto] = useState([])
     const [avaliacoes, setAvaliacoes] = useState([])
     const [mediaAvaliacoes, setMediaAvaliacoes] = useState()
-    console.log(produto)
 
     useEffect(() => {
         const fetchProduto = async () => {
@@ -28,9 +28,9 @@ function Produto() {
     }, [])
 
     useEffect(() => {
-        const fetchAvaliacoes= async () => {
+        const fetchAvaliacoes = async () => {
             try {
-                const res = await axios.get(`http://localhost:8800/avaliacao/${prodId}`)
+                const res = await axios.get(`http://localhost:8800/avaliacoes/${prodId}`)
                 setAvaliacoes(res.data)
             } catch (error) {
                 console.log(error)
@@ -41,7 +41,7 @@ function Produto() {
     }, [])
 
     useEffect(() => {
-        const fetchMediaAvaliacoes= async () => {
+        const fetchMediaAvaliacoes = async () => {
             try {
                 const res = await axios.get(`http://localhost:8800/avaliacao/media/${prodId}`)
                 setMediaAvaliacoes(res.data)
@@ -49,7 +49,6 @@ function Produto() {
                 console.log(error)
             }
         }
-
         fetchMediaAvaliacoes()
     }, [])
 
@@ -75,24 +74,29 @@ function Produto() {
                                 <p>Em estoque: {prod.quantidade}</p>
                                 <p>Tag: {prod.tag}</p>
                                 <p>Descrição: {prod.descricao}</p>
+                                <label htmlFor="qtd">Quantidade:</label>
+                                <input type="number" id='qtd' />
                             </div>
                         </div>
-                        <p>-</p>
-                        <input type="number" />
-                        <p>+</p>
-                        <button onClick={() => nav('/')}>Cancelar</button>
-                        <button onClick={handleBuy}>Comprar</button>
+                        <div className={styles.botoes}>
+                            <button onClick={() => nav('/')}>Cancelar</button>
+                            <button onClick={handleBuy}>Comprar</button>
+                        </div>
                     </div>
                 )
             })}
-            <div>
+            <div className={styles.avaliacao}>
                 <h1>Avaliações</h1>
                 <h2>{mediaAvaliacoes}</h2>
-                {avaliacoes.map(avaliacao => {
-                    return (
-                        <Avaliacoes nota={avaliacao.nota} comentario={avaliacao.comentario} nome={avaliacao.nome}/>
-                    )
-                })}
+                {avaliacoes.length === 0 ?
+                    <h4 className={styles.avaliacoes}>Nenhuma avaliação desse produto</h4>
+                    :
+                    avaliacoes.map(avaliacao => {
+                        return (
+                            <Avaliacoes nota={avaliacao.nota} comentario={avaliacao.comentario} nome={avaliacao.nome} />
+                        )
+                    })}
+                <AvaliacaoComentario prodId={prodId} />
             </div>
         </div>
     )

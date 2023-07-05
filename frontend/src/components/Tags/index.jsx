@@ -10,7 +10,7 @@ function Tags({ tags, produtosTotais, FiltrarProdutos, setProdutos }) {
         <ul className={styles.lista}>
             {tags.map(tag => {
                 return (
-                    <li className={styles.tag} onClick={() => FiltrarProdutos(tag)}>{tag}</li>
+                    <li key={tag} className={styles.tag} onClick={() => FiltrarProdutos(tag)}>{tag}</li>
                 )
             })}
             <li className={styles.tag} onClick={() => setProdutos(produtosTotais)}>Todas</li>
