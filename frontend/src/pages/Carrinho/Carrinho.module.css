@@ -1,4 +1,23 @@
+.nenhum {
+    text-align: center;
+}
+
+.lista {
+    text-align: center;
+}
+
 .item {
     display: flex;
+    justify-content: center;
+    align-items: center;
     list-style: none;
+    border-bottom: .5px solid #808080;
+    width: 50%;
+    margin: auto;
+}
+
+.finalizar {
+    background-color: #003A59;
+    border-color: #003A59;
+    color: #ffffff;
 }

@@ -2,11 +2,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2em;
 }
 
 .produto__imagem {
     width: 50vh;
     margin-right: 2em;
+}
+
+.qtd {
+    border: 1px solid #003A59;
+    border-radius: 10px;
+    width: 15%;
+    margin-left: .5em;
+    text-align: center;
 }
 
 .botoes {
@@ -15,6 +24,11 @@
 
 .botoes button {
     margin-left: 1em;
+}
+
+.botao_carrinho {
+    background-color: #003A59;
+    color: #FFFFFF;
 }
 
 .avaliacao {

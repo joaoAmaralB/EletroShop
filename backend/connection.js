@@ -112,6 +112,17 @@ app.delete("/estoque/:id", (req, res) => {
   });
 });
 
+//Delete from carrinho
+app.delete("/carrinho/:id", (req, res) => {
+  const carrinhoId = req.params.id;
+  const q = " DELETE FROM carrinho WHERE id = ?";
+
+  db.query(q, [carrinhoId], (err, data) => {
+    if (err) return res.send(err);
+    return res.json(data);
+  });
+});
+
 //Add produto
 app.post("/add", (req, res) => {
   const q = "INSERT INTO produtos(`nome`, `descricao`, `preco`, `tag`, `quantidade`, `imagem`) VALUES (?)";

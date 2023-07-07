@@ -38,14 +38,15 @@ function Menu() {
       <Tags tags={tags} produtosTotais={produtosTotais} FiltrarProdutos={FiltrarProdutos} setProdutos={setProdutos}/>
       <ul className={styles.cards}>
         {produtos.map(produto => {
-          return <Card
+          return produto.quantidade > 0 ? <Card
             key={produto.id}
             id={produto.id}
             nome={produto.nome}
             preco={produto.preco}
             imagem={produto.imagem}
             tag={produto.tag}
-          />
+          /> :
+          null
         })}
       </ul>
     </div>

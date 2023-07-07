@@ -26,7 +26,7 @@ function Card({ id, nome, preco, imagem, tag }) {
       <h3>{`R$${preco}`}</h3>
 
       <div className={styles.botoes}>
-        <button onClick={() => nav(`/produto/${id}`)}>Comprar</button>
+        <button onClick={() => nav(`/produto/${id}`)}>Informações</button>
         <BotaoCarrinho handleCarrinho={handleCarrinho}/>
       </div>
     </div>

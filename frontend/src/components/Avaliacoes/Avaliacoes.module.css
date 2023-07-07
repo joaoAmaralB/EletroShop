@@ -1,0 +1,21 @@
+.nota__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5em;
+    gap: 4em;
+    border: 1px solid #003A59;
+    border-radius: 15px;
+    width: 30%;
+    margin-bottom: 1em;
+    margin: 0 30% 1em 30%;
+}
+
+.nome_nota {
+    padding-right: 4em;
+    border-right: 1px solid #003A59;
+}
+
+.nota {
+    border-bottom: .5px solid #003A59;
+}

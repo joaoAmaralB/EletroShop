@@ -22,6 +22,15 @@ function Carrinho() {
     fetchCarrinho()
   }, [])
 
+  const handleFinalizar = async () => {
+    try {
+      await axios.delete(`http://localhost:8800/carrinho/${clientId}`)
+      window.location.reload()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   const fetchCarrinhoTotal = async () => {
     try {
@@ -39,9 +48,9 @@ function Carrinho() {
   return (
     <div>
       {produtosCarrinho.length === 0 ?
-        <h2>Nenhum item adicionado ao carrinho</h2>
+        <h2 className={styles.nenhum}>Nenhum item adicionado ao carrinho</h2>
         :
-        <ul>
+        <ul className={styles.lista}>
           <h2>Itens no carrinho</h2>
           {produtosCarrinho.map(produto => {
             return <li className={styles.item}>
@@ -50,12 +59,10 @@ function Carrinho() {
                 <h4>Preço: {produto.preco}</h4>
                 <h3>Quantidade: {produto.qtd_itens}</h3>
               </div>
-
-              <div><button className={styles.delete}>Remover</button ></div>
             </li>
           })}
           <h2>Total: R${valorTotal}</h2>
-          <button>Finalizar compra</button>
+          <button className={styles.finalizar} onClick={handleFinalizar}>Finalizar compra</button>
         </ul>
       }
     </div>
