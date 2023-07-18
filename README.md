@@ -29,7 +29,8 @@ create table clientes(
 	nome varchar(50) not null,
 	email varchar(50) not null,
 	endereco varchar(70) not null,
-	telefone varchar(50) not null,
+	telefone varchar(20) not null,
+	senha varchar(45) not null,
 	primary key(id)
 );
 
@@ -39,7 +40,6 @@ create table avaliacao(
 	id_cli int not null,
 	nota int not null,
 	comentario varchar(100),
-	nome varchar(50) not null,
 	primary key(id),
 	foreign key(id_prod) references produtos(id),
 	foreign key(id_cli) references clientes(id)
@@ -57,7 +57,7 @@ create table carrinho(
 CREATE FUNCTION fn_TotalCarrinho (id_carrinho int)
 RETURNS FLOAT DETERMINISTIC
 RETURN
-(SELECT SUM(p.preco)
+(SELECT SUM(p.preco * c.qtd_itens)
 FROM produtos p INNER JOIN carrinho c
 ON p.id = c.id_prod INNER JOIN clientes cl
 ON cl.id = c.id_cli

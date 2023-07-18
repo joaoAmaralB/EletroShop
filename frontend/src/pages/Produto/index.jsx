@@ -15,7 +15,7 @@ function Produto() {
     const [avaliacoes, setAvaliacoes] = useState([])
     const [mediaAvaliacoes, setMediaAvaliacoes] = useState()
     const [quantidade, setQuantidade] = useState({
-        quantidade: ""
+        quantidade: null
     })
     const { clientId } = useContext(ClienteContext)
 

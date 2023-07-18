@@ -2,11 +2,14 @@ import axios from 'axios'
 import styles from './Carrinho.module.css'
 import { ClienteContext } from 'context/ClienteContext'
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Carrinho() {
   const { clientId } = useContext(ClienteContext)
   const [produtosCarrinho, setProdutosCarrinho] = useState([])
   const [valorTotal, setValorTotal] = useState()
+
+  const nav = useNavigate()
 
   useEffect(() => {
     const fetchCarrinho = async () => {
@@ -25,7 +28,7 @@ function Carrinho() {
   const handleFinalizar = async () => {
     try {
       await axios.delete(`http://localhost:8800/carrinho/${clientId}`)
-      window.location.reload()
+      nav('/usuario')
     } catch (error) {
       console.log(error)
     }
